@@ -20,12 +20,13 @@ interface ICreateFoodData {
   image: string;
   price: string;
   description: string;
+  available: boolean;
 }
 
 interface IModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  handleAddFood: (food: Omit<IFoodPlate, 'id' | 'available'>) => void;
+  handleAddFood: (food: Omit<IFoodPlate, 'id'>) => void;
 }
 
 const ModalAddFood: React.FC<IModalProps> = ({
@@ -38,6 +39,10 @@ const ModalAddFood: React.FC<IModalProps> = ({
   const handleSubmit = useCallback(
     async (data: ICreateFoodData) => {
       // TODO ADD A NEW FOOD AND CLOSE THE MODAL
+      data.available = true;
+      const result = await handleAddFood(data);
+
+      setIsOpen();
     },
     [handleAddFood, setIsOpen],
   );
